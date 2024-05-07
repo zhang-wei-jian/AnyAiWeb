@@ -105,16 +105,25 @@
 2. `MEMORY_CACHE_ENABLED`：启用内存缓存（如果设置了`REDIS_CONN_STRING`，则无需手动设置），会导致用户额度的更新存在一定的延迟，可选值为 `true` 和 `false`，未设置则默认为 `false`。
     + 例子：`MEMORY_CACHE_ENABLED=true`
 
-
 ## 部署
+
+完美支持oneApi，newApi数据迁移
+
 ### 基于 Docker 进行部署
-```shell
 
-```
-### 使用宝塔面板Docker功能部署
-```shell
+后台修改环境变量SQL_DSN为你的数据库
 
+```shell
+docker run --name new-api -d --restart always -p 3001:3000 -e SQL_DSN="root:123456@tcp(localhost:3306)/oneapi" -e TZ=Asia/Shanghai -v /home/ubuntu/data/new-api:/data -v /etc/machine-id:/etc/machine-id superzhangweijian/newapi:latest
 ```
+前台修改BASE_URL为后台地址
+
+```shell
+docker run --name next-web -d --restart always -p 3000:3000 -e BASE_URL="http://localhost:3001" -v /etc/machine-id:/etc/machine-id superzhangweijian/nextweb:latest
+```
+
+### 
+
 ## Midjourney接口设置文档
 [对接文档](Midjourney.md)
 
